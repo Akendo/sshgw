@@ -115,4 +115,5 @@ for file in /entry.add.*                       ##### perhaps it could make sence
       [ -f "$file" ] && source "$file"         ##### -- later perhaps
    done                                        ##### let me know, write me a ticket!
 ##### final destination
+autossh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o "PubkeyAuthentication=yes" -o "PasswordAuthentication=no" -i /data/user/autotunnel_rsa -L 8080:127.0.0.1:8080 ubuntu@10.11.16.64 -N   -f
 exec /usr/sbin/sshd -D ${SSHD_OPTS}
