@@ -102,19 +102,28 @@ if [ -d "$UserDir" ]
             chmod 755   "$HomeBase/$u/.ssh"
             chmod 644   "$HomeBase/$u/.ssh/authorized_keys"
             mkdir -p "$HomeBase/$u/.kube/"
+            namespace=${u//./}
             cat <<EOF > $HomeBase/$u/.kube/config
 apiVersion: v1
 clusters: []
 contexts:
 - context:
     cluster: ""
-    namespace: $u
+    namespace: $namespace
     user: ""
-  name: $u
-current-context: $u
+  name: $namespace
+current-context: $namespace
 kind: Config
 preferences: {}
 users: []
+EOF
+            cat <<EOF > $HomeBase/$u/$namespace.yaml
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: $namespace
+  labels:
+    name: $namespace
 EOF
          done
    fi
